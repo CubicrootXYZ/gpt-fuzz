@@ -1,5 +1,6 @@
 import csv
 import random
+import time
 import traceback
 
 import transformers
@@ -31,6 +32,7 @@ def testFnc(data):
         # Write to file in case we fail at some point
         f.close
         f = open("tests.csv", "wb")
+        time.sleep(2)  # let's hope that's enough for the hoster to be fine
 
 
 def get_random_string(length):
