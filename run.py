@@ -24,7 +24,7 @@ def testFnc(data):
     global f
     j += 1
     output = gen(data, max_length=100, do_sample=True, temperature=0.9)
-    writer.writerow([data, output[0]["generated_text"]])
+    writer.writerow([data, output[0]["generated_text"]], quoting=csv.QUOTE_ALL)
 
     if j % 100 == 0:
         print(f"{j} inputs tested")
