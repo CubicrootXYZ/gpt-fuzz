@@ -16,7 +16,7 @@ gen = pipeline("text-generation", model="EleutherAI/gpt-neo-125M")
 
 j = 0
 f = open("tests.csv", "a")
-writer = csv.writer(f)
+writer = csv.writer(f, quoting=csv.QUOTE_ALL)
 
 
 def testFnc(data):
@@ -24,7 +24,7 @@ def testFnc(data):
     global f
     j += 1
     output = gen(data, max_length=100, do_sample=True, temperature=0.9)
-    writer.writerow([data, output[0]["generated_text"]], quoting=csv.QUOTE_ALL)
+    writer.writerow([data, output[0]["generated_text"]])
 
     if j % 100 == 0:
         print(f"{j} inputs tested")
