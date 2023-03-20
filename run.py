@@ -1,5 +1,6 @@
 import csv
 import random
+import signal
 import time
 import traceback
 
@@ -32,10 +33,6 @@ def testFnc(data):
 
     if j % 100 == 0:
         print(f"{j} inputs tested")
-        # Write to file in case we fail at some point
-        f.close
-        f = open("tests.csv", "wb")
-        time.sleep(2)  # let's hope that's enough for the hoster to be fine
 
 
 # Random string generator
@@ -43,6 +40,12 @@ def get_random_string(length):
     result_str = "".join(random.choice(all_letters) for i in range(length))
     return result_str
 
+
+def handler(signum, frame):
+    f.close()
+
+
+signal.signal(signal.SIGINT, handler)
 
 # Run forever xD
 while True:
@@ -53,4 +56,5 @@ while True:
         traceback.print_exc()
         print(e)
         print(f"Failed with input: {input}")
+        f.close()
         break
