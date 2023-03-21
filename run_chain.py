@@ -1,5 +1,4 @@
-# Generates random string inputs of variable length
-# and records the outcome.
+# Starts with a sentence and passes the output as the next input.
 
 import csv
 import random
@@ -12,17 +11,12 @@ from transformers import pipeline
 
 transformers.logging.set_verbosity_error()
 
-# Get the base letters, increase likelihood of spaces, etc.
-all_letters = [" ", " ", " ", " ", " ", " ", " ", ".", ".", ".", ".", ";", ":"]
-for i in range(0, 1100):
-    all_letters.append(chr(i))
-
 # Load model
 gen = pipeline("text-generation", model="EleutherAI/gpt-neo-125M")
 
 # Prepare foo
 j = 0
-f = open("random.csv", "a")
+f = open("chain.csv", "a")
 writer = csv.writer(f, quoting=csv.QUOTE_ALL)
 
 
@@ -37,11 +31,7 @@ def testFnc(data):
     if j % 100 == 0:
         print(f"{j} inputs tested")
 
-
-# Random string generator
-def get_random_string(length):
-    result_str = "".join(random.choice(all_letters) for i in range(length))
-    return result_str
+    return output[0]["generated_text"]
 
 
 def handler(signum, frame):
@@ -51,10 +41,10 @@ def handler(signum, frame):
 signal.signal(signal.SIGINT, handler)
 
 # Run forever xD
+input = "Generate a prompt for an AI to feed to an AI."
 while True:
-    input = get_random_string(random.randint(1, 100))
     try:
-        testFnc(input)
+        input = testFnc(input)
     except Exception as e:
         traceback.print_exc()
         print(e)
