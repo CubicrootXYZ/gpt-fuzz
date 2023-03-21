@@ -6,4 +6,6 @@ The fuzzing is very primitive and just generates random string inputs for the mo
 
 ## Running it
 
-Install python 3 and pip. Run `install.sh` then `python run.py`. In- and outputs will be saved in a `tests.csv` and the script will stop if the model crashes.
+Install python 3 and pip. Run `install.sh`.
+
+Run one of the `run_xxx.py` files. They will generate a CSV file with the in- and outputs.
